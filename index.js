@@ -19,13 +19,17 @@ module.exports = app => {
     const repo = context.payload.repository;
     const owner = repo.owner.login;
     const check_suite = context.payload.check_run.check_suite
+    
+    if (check_suite.app.slug != "github-actions") {
+      return
+    }
 
     const workflow_runs = (await context.github.actions.listRepoWorkflowRuns({
       owner: owner,
       repo: repo.name,
       author: context.payload.sender.login
     })).data.workflow_runs;
-    app.log(workflow_runs)
+    // app.log(workflow_runs)
 
     // TODO: There may be a race condition in retrieving the
     // artifacts; sometimes the result is an empty list, but will
@@ -36,14 +40,18 @@ module.exports = app => {
       run_id: workflow_runs[0].id
     })).data.artifacts;
     app.log(artifacts)
+    
+    app.log(check_suite.pull_requests)
 
     for (const pull of check_suite.pull_requests) {
       app.log(pull)
+      const message = `Draft PDF in [${artifacts[0].name}.zip](https://github.com/${owner}/${repo.name}/suites/${check_suite.id}/artifacts/${artifacts[0].id})`
+      app.log(message)
       return context.github.issues.createComment({
         owner: owner,
         repo: repo.name,
         issue_number: pull.number,
-        body: `Draft PDF in [${artifacts[0].name}.zip](https://github.com/${owner}/${repo.name}/suites/${check_suite.id}/artifacts/${artifacts[0].id})`
+        body: message
       });
     }
   });
