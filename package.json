@@ -21,6 +21,8 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "acorn": "^7.1.0",
+    "hbs": "^4.1.0",
     "probot": "^9.5.3"
   },
   "devDependencies": {
