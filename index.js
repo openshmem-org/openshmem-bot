@@ -29,7 +29,6 @@ module.exports = app => {
       repo: repo.name,
       author: context.payload.sender.login
     })).data.workflow_runs;
-    // app.log(workflow_runs)
 
     // TODO: There may be a race condition in retrieving the
     // artifacts; sometimes the result is an empty list, but will
@@ -39,10 +38,10 @@ module.exports = app => {
       repo: repo.name,
       run_id: workflow_runs[0].id
     })).data.artifacts;
-    app.log(artifacts)
     
     app.log(check_suite.pull_requests)
 
+    // TODO: The check_suite event is not guaranteed to have associated pull requests
     for (const pull of check_suite.pull_requests) {
       app.log(pull)
       const message = `Draft PDF in [${artifacts[0].name}.zip](https://github.com/${owner}/${repo.name}/suites/${check_suite.id}/artifacts/${artifacts[0].id})`
