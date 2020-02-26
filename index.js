@@ -25,6 +25,7 @@ module.exports = app => {
       repo: repo.name,
       author: context.payload.sender.login
     })).data.workflow_runs;
+    app.log(workflow_runs)
 
     // TODO: There may be a race condition in retrieving the
     // artifacts; sometimes the result is an empty list, but will
@@ -34,8 +35,10 @@ module.exports = app => {
       repo: repo.name,
       run_id: workflow_runs[0].id
     })).data.artifacts;
+    app.log(artifacts)
 
     for (const pull of check_suite.pull_requests) {
+      app.log(pull)
       return context.github.issues.createComment({
         owner: owner,
         repo: repo.name,
