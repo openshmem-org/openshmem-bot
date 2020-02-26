@@ -6305,6 +6305,6 @@ specifiers:
   jest: ^24.9.0
   nock: ^11.4.0
   nodemon: ^2.0.0
-  probot: ^9.5.3
+  probot: ^9.9.6
   smee-client: ^1.1.0
   standard: ^14.3.1

@@ -17,7 +17,8 @@ module.exports = app => {
 
   app.on("check_run.completed", async context => {
     const repo = context.payload.repository;
-    const owner = repo.owner.login
+    const owner = repo.owner.login;
+    const check_suite = context.payload.check_run.check_suite
 
     const workflow_runs = (await context.github.actions.listRepoWorkflowRuns({
       owner: owner,
@@ -34,12 +35,12 @@ module.exports = app => {
       run_id: workflow_runs[0].id
     })).data.artifacts;
 
-    for (const pull of context.payload.check_run.check_suite.pull_requests) {
+    for (const pull of check_suite.pull_requests) {
       return context.github.issues.createComment({
         owner: owner,
         repo: repo.name,
         issue_number: pull.number,
-        body: `Build artifact [${artifacts[0].name}.zip](https://github.com/${owner}/${repo.name}/suites/${context.payload.check_run.check_suite.id}/artifacts/${artifacts[0].id})`
+        body: `Draft PDF in [${artifacts[0].name}.zip](https://github.com/${owner}/${repo.name}/suites/${check_suite.id}/artifacts/${artifacts[0].id})`
       });
     }
   });

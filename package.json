@@ -1,13 +1,13 @@
 {
-  "name": "my-test-bot",
+  "name": "openshmem-bot",
   "version": "1.0.0",
   "private": true,
-  "description": "A test GitHub App built with Probot",
+  "description": "A GitHub App built with Probot for OpenSHMEM pull requests",
   "author": "Nicholas S. Park <nspark.work@gmail.com>",
   "license": "ISC",
-  "repository": "https://github.com/nspark/my-test-bot.git",
-  "homepage": "https://github.com/nspark/my-test-bot",
-  "bugs": "https://github.com/nspark/my-test-bot/issues",
+  "repository": "https://github.com/openshmem-org/openshmem-bot.git",
+  "homepage": "https://github.com/openshmem-org/openshmem-bot",
+  "bugs": "https://github.com/openshmem-org/openshmem-bot/issues",
   "keywords": [
     "probot",
     "github",
@@ -23,7 +23,7 @@
   "dependencies": {
     "acorn": "^7.1.0",
     "hbs": "^4.1.0",
-    "probot": "^9.5.3"
+    "probot": "^9.9.6"
   },
   "devDependencies": {
     "jest": "^24.9.0",
